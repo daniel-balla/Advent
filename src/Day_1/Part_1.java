@@ -1,34 +1,33 @@
 package Day_1;
 
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.util.stream.Stream;
+import java.nio.file.*;
 
 public class Part_1 {
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		
-		String file = "src/Day_1/day_1_input";
-		System.out.println("Santa must go to floor " + count(file));
-	
+
+		Path path = Paths.get("src/Day_1/day_1_input");
+		System.out.println("Santa needs to go to floor " + count(path));
+
 	}
-	
-	public static int count(String file) throws FileNotFoundException, IOException {
-		
-		BufferedReader in = new BufferedReader(new FileReader(file));
-		String str = in.readLine();
-		char[] arr = new char[str.length()];
-		str.getChars(0, str.length(), arr, 0);
-		int counter = 0;
-		
-		for(int i = 0; i < str.length(); i++) {
-			if(arr[i] == '(' ) {
-				counter++;
-			}
-			else
-				counter--;
-		}	
-		in.close();
+
+	public static long count(Path path) throws FileNotFoundException, IOException {
+
+		long counter = 0, count1 = 0, count2 = 0;
+		try (Stream<String> lines1 = Files.lines(path)) {
+
+			count1 = lines1.flatMapToInt(s -> s.chars()).filter(e -> e == '(').count();
+		}
+
+		try (Stream<String> lines2 = Files.lines(path)) {
+
+			count2 = lines2.flatMapToInt(s -> s.chars()).filter(e -> e == ')').count();
+		}
+
+		counter = count1 - count2;
+
 		return counter;
 	}
 }
