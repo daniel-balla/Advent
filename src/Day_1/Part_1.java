@@ -38,13 +38,12 @@ public class Part_1 {
 
 		byte[] arr = Files.readAllBytes(path);
 		String str = new String(arr);
-		
-		IntStream lines1 = str.chars();
-		IntStream lines2 = str.chars();
-		
+
+		IntStream lines1 = str.chars(), lines2 = str.chars();
+
 		count1 = lines1.filter(e -> e == '(').count();
 		count2 = lines2.filter(e -> e == ')').count();
-		
+
 		counter = count1 - count2;
 
 		return counter;
