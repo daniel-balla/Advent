@@ -70,8 +70,9 @@ public class D1_Part_1 {
 		for (int i = 0; i < arr.length; i++) {
 			if (arr[i] == '(') {
 				count++;
-			} else
+			} else {
 				count--;
+			}
 		}
 		return count;
 	}

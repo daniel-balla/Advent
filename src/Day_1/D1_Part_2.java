@@ -12,10 +12,10 @@ public class D1_Part_2 {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 
-		String file = "src/Day_1/day_1_input";
+		String file = "src/resources/day_1_input";
 		System.out.println("Santa reaches the basement at step " + reachBasement1(file));
 
-		Path path = Paths.get("src/Day_1/day_1_input");
+		Path path = Paths.get("src/resources/day_1_input");
 		System.out.println("Santa reaches the basement at step " + reachBasement2(path));
 
 	}
@@ -27,15 +27,15 @@ public class D1_Part_2 {
 		try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
 			String lines = reader.readLine();
 
-			char[] arr = new char[lines.length()];
-			lines.getChars(0, lines.length(), arr, 0);
+			char[] arr = lines.toCharArray();
 
 			for (int i = 0; i < lines.length(); i++) {
 
 				if (arr[i] == '(') {
 					counter++;
-				} else
+				} else {
 					counter--;
+				}
 				if (counter == -1) {
 					counter = i + 1;
 					break;
@@ -54,8 +54,9 @@ public class D1_Part_2 {
 		for (int i = 0; i < lines.length; i++) {
 			if (lines[i] == '(') {
 				counter++;
-			} else
+			} else {
 				counter--;
+			}
 			if (counter == -1) {
 				counter = i + 1;
 				break;
