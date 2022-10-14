@@ -6,4 +6,5 @@
  *
  */
 module Advent {
+	requires java.desktop;
 }
