@@ -14,16 +14,19 @@ public class D2_Part_1 {
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 
 		String file = "src/resources/day_2_input";
-		System.out.println("The elves should order " + workBR(file) + " square feet of wrapping paper");
-		
+		System.out.println(
+				"The elves should order " + readFileStartCalculationViaBR(file) + " square feet of wrapping paper.");
+
 		Path path = Paths.get("src/resources/day_2_input");
-		System.out.println("The elves should order " + workFrAB(path) + " square feet of wrapping paper");
+		System.out.println(
+				"The elves should order " + readFileStartCalculationViaByte(path) + " square feet of wrapping paper.");
 
 	}
 
-	public static int rechnen(int l, int w, int h) {
+	public static int calculatePaperAmount(Present pr) {
 
-		int side1 = (2 * l * w), side2 = (2 * w * h), side3 = (2 * h * l), ret = side1 + side2 + side3;
+		int side1 = (2 * pr.length * pr.width), side2 = (2 * pr.width * pr.height), side3 = (2 * pr.height * pr.length),
+				ret = side1 + side2 + side3;
 
 		if (side1 <= side2 && side1 <= side3) {
 			ret += side1 / 2;
@@ -35,52 +38,61 @@ public class D2_Part_1 {
 		return ret;
 	}
 
-	public static int[] extract(String str) {
+	public static String[] extractNumbers(String str) {
 
-		str = str.replaceAll("[^0-9]", " ");
-		str = str.replaceAll(" +", " ");
+		str = str.replaceAll("\\s", "x");
+		str = str.replaceAll("x", " ");
+		str = str.replaceAll("  ", " ");
 
 		String[] strArr = str.split(" ");
-		int[] numbers = new int[strArr.length];
 
-		for (int i = 0; i < strArr.length; i++) {
-			numbers[i] = Integer.parseInt(strArr[i]);
-		}
-		return numbers;
+		return strArr;
 	}
 
-	public static int workBR(String file) throws FileNotFoundException, IOException {
+	public static int readFileStartCalculationViaBR(String file) throws FileNotFoundException, IOException {
 
-		BufferedReader in = new BufferedReader(new FileReader(file));
 		String str;
-		int res = 0;
+		int result = 0;
 
-		while ((str = in.readLine()) != null) {
-			Scanner a = new Scanner(str);
-			a.useDelimiter("\\D+");
-			int[] arr = new int[3];
-			for (int i = 0; i < 3; i++) {
-				int sd = a.nextInt();
-				arr[i] = sd;
+		try (BufferedReader in = new BufferedReader(new FileReader(file))) {
+
+			while ((str = in.readLine()) != null) {
+
+				try (Scanner a = new Scanner(str)) {
+					a.useDelimiter("\\D+");
+					int[] arr = new int[3];
+					for (int i = 0; i < 3; i++) {
+						int sd = a.nextInt();
+						arr[i] = sd;
+					}
+					Present pr = new Present(arr[0], arr[1], arr[2]);
+					result += calculatePaperAmount(pr);
+				}
 			}
-			res += rechnen(arr[0], arr[1], arr[2]);
-			a.close();
 		}
-		in.close();
 
-		return res;
+		return result;
 	}
 
-	public static int workFrAB(Path path) throws IOException {
+	public static int readFileStartCalculationViaByte(Path path) throws IOException {
 
-		int result = 0;
+		int result = 0, l, w, h;
 		byte[] lines = Files.readAllBytes(path);
 		String str = new String(lines);
-		int[] intArr = extract(str);
+		String strArr[] = extractNumbers(str);
 
-		for (int i = 1; i < intArr.length + 1; i++) {
-			result += rechnen(intArr[i - 1], intArr[i], intArr[i + 1]);
-			i = i + 2;
+		for (int i = 0; i < strArr.length - 2; i++) {
+			if (strArr[i].matches("[0-9]+")) {
+
+				l = Integer.parseInt(strArr[i]);
+				w = Integer.parseInt(strArr[i + 1]);
+				h = Integer.parseInt(strArr[i + 2]);
+
+				Present pr = new Present(l, w, h);
+				result += calculatePaperAmount(pr);
+				i = i + 2;
+			} else
+				i++;
 		}
 		return result;
 

@@ -10,14 +10,14 @@ public class D1_Part_1 {
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 
 		Path path = Paths.get("src/resources/day_1_input");
-		System.out.println("Santa needs to go to floor " + count(path));
-		System.out.println("Santa needs to go to floor " + count1(path));
-		System.out.println("Santa needs to go to floor " + count3(path));
+		System.out.println("Santa needs to go to floor " + countFloor(path));
+		System.out.println("Santa needs to go to floor " + countFloor1(path));
+		System.out.println("Santa needs to go to floor " + countFloor3(path));
 	}
 
-	public static long count(Path path) throws FileNotFoundException, IOException {
+	public static long countFloor(Path path) throws FileNotFoundException, IOException {
 
-		long counter = 0, count1 = 0, count2 = 0;
+		long count1, count2;
 		try (Stream<String> lines1 = Files.lines(path)) {
 
 			count1 = lines1.flatMapToInt(s -> s.chars()).filter(e -> e == '(').count();
@@ -28,14 +28,12 @@ public class D1_Part_1 {
 			count2 = lines2.flatMapToInt(s -> s.chars()).filter(e -> e == ')').count();
 		}
 
-		counter = count1 - count2;
-
-		return counter;
+		return count1 - count2;
 	}
 
-	public static long count1(Path path) throws FileNotFoundException, IOException {
+	public static long countFloor1(Path path) throws FileNotFoundException, IOException {
 
-		long count1 = 0, count2 = 0;
+		long count1, count2;
 
 		byte[] arr = Files.readAllBytes(path);
 		String str = new String(arr);
@@ -48,9 +46,9 @@ public class D1_Part_1 {
 		return count1 - count2;
 	}
 
-	public static long count2(Path path) throws FileNotFoundException, IOException {
+	public static long countFloor2(Path path) throws FileNotFoundException, IOException {
 
-		long count1 = 0, count2 = 0;
+		long count1, count2;
 
 		byte[] arr = Files.readAllBytes(path);
 
@@ -63,7 +61,7 @@ public class D1_Part_1 {
 		return count1 - count2;
 	}
 
-	public static long count3(Path path) throws FileNotFoundException, IOException {
+	public static long countFloor3(Path path) throws FileNotFoundException, IOException {
 
 		long count = 0;
 
