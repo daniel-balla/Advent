@@ -5,17 +5,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class D3_Part_2 {
+public class D3_Main {
 
 	public static void main(String[] args) throws IOException {
 
-		int[][] intArr = new int[2500][2500];
+		int[][] intArr1 = new int[2500][2500];
+		int[][] intArr2 = new int[2500][2500];
 		Path path = Paths.get("src/resources/day_3_input");
-		System.out.println(navigateGrid(intArr, path) + " houses receive at least one present");
-
+		System.out.println(navigateGrid(intArr1, path, 1) + " houses receive at least one present (only Santa)");
+		System.out.println(navigateGrid(intArr2, path, 2) + " houses receive at least one present (Santa and Robo)");
 	}
 
-	public static int navigateGrid(int[][] intArr, Path path) throws IOException {
+	public static int navigateGrid(int[][] intArr, Path path, int playerCount) throws IOException {
 
 		int visited = 1;
 		int row = 1250, column = 1250;
@@ -23,14 +24,15 @@ public class D3_Part_2 {
 		byte[] directions = Files.readAllBytes(path);
 		Player santa = new Player(row, column);
 		Player robo = new Player(row, column);
-		Player player;
+		Player player = new Player(row, column);
 
 		for (int i = 0; i < directions.length; i++) {
-			if (i % 2 == 0) {
-				player = santa;
-			} else
-				player = robo;
-
+			if (playerCount == 2) {
+				if (i % 2 == 0) {
+					player = santa;
+				} else
+					player = robo;
+			}
 			switch (directions[i]) {
 
 			case '^':

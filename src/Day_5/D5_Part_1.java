@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class D5_Part_1 {
 
@@ -76,5 +78,39 @@ public class D5_Part_1 {
 		}
 		return countGood++;
 	}
+	
+
+	public static int checkStr(Path path) throws IOException {
+
+		byte[] lines = Files.readAllBytes(path);
+	
+		long in = lines.toString().chars().filter(ch -> "aeiou".contains((char)ch+"")).count();
+	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
