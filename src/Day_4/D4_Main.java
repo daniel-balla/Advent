@@ -4,7 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class D4_Part_1_and_2 {
+public class D4_Main {
 
 	public static void main(String[] args) throws NoSuchAlgorithmException {
 
