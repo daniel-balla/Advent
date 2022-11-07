@@ -1,8 +1,8 @@
-package Day_7;
+package Day_7.References;
 
 public class VariableReference extends Reference {
 
-	String name;
+	public String name;
 
 	public VariableReference(String s) {
 		this.name = s;
@@ -10,7 +10,7 @@ public class VariableReference extends Reference {
 
 	@Override
 	public String toString() {
-		return name;
+		return name + " " + Integer.toString(signal);
 	}
 
 	@Override

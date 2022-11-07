@@ -1,4 +1,4 @@
-package Day_7;
+package Day_7.References;
 
 public class LiteralReference extends Reference {
 
@@ -22,9 +22,6 @@ public class LiteralReference extends Reference {
 			return true;
 		}
 		if(!(o instanceof LiteralReference)) {
-			return false;
-		}
-		if(this.equals(null)||o.equals(null)) {
 			return false;
 		}
 		LiteralReference other = (LiteralReference) o;
